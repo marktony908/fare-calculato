@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fare Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Transport Fare Calculator</h2>
+
+        <!-- Login Form -->
+        <div id="loginForm">
+            <h3>Login</h3>
+            <input type="text" id="loginUsername" placeholder="Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="login()">Login</button>
+            <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" style="display: none;">
+            <h3>Register</h3>
+            <input type="text" id="registerUsername" placeholder="Username">
+            <input type="password" id="registerPassword" placeholder="Password">
+            <button onclick="register()">Register</button>
+            <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+        </div>
+
+        <!-- Fare Calculator -->
+        <div id="fareCalculator" style="display: none;">
+            <h3>Calculate Fare</h3>
+            <label for="distance">Distance (KM):</label>
+            <input type="number" id="distance" placeholder="Enter distance">
+
+            <label for="rate">Fare per KM:</label>
+            <input type="number" id="rate" placeholder="Enter fare rate">
+
+            <button onclick="calculateFare()">Calculate</button>
+            <h3>Total Fare: <span id="totalFare">0</span></h3>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
