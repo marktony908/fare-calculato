@@ -1,25 +1,33 @@
+/* General styling */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    margin: 0;
+    flex-direction: column;
 }
 
 .container {
-    background: white;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
 }
 
 input {
     width: 100%;
     padding: 10px;
-    margin: 5px 0;
+    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -32,13 +40,47 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
 button:hover {
-    background-color: #db2b0c;
+    background-color: #218838;
 }
 
-p {
-    font-size: 14px;
+.hidden {
+    display: none;
+}
+
+/* Login and Register Forms */
+#login-container, #register {
+    display: none;
+}
+
+/* Fare Calculator */
+#fare-calculator {
+    display: none;
+}
+
+/* Video Styling */
+#video-container {
+    width: 80%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Booking Confirmation */
+#confirmation-message {
+    display: none;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 20px;
 }

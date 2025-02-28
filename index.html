@@ -3,45 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fare Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Matatu Booking System</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Transport Fare Calculator</h2>
 
-        <!-- Login Form -->
-        <div id="loginForm">
-            <h3>Login</h3>
-            <input type="text" id="loginUsername" placeholder="Username">
-            <input type="password" id="loginPassword" placeholder="Password">
-            <button onclick="login()">Login</button>
-            <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
-        </div>
-
-        <!-- Register Form -->
-        <div id="registerForm" style="display: none;">
-            <h3>Register</h3>
-            <input type="text" id="registerUsername" placeholder="Username">
-            <input type="password" id="registerPassword" placeholder="Password">
-            <button onclick="register()">Register</button>
-            <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
-        </div>
-
-        <!-- Fare Calculator -->
-        <div id="fareCalculator" style="display: none;">
-            <h3>Calculate Fare</h3>
-            <label for="distance">Distance (KM):</label>
-            <input type="number" id="distance" placeholder="Enter distance">
-
-            <label for="rate">Fare per KM:</label>
-            <input type="number" id="rate" placeholder="Enter fare rate">
-
-            <button onclick="calculateFare()">Calculate</button>
-            <h3>Total Fare: <span id="totalFare">0</span></h3>
-            <button onclick="logout()">Logout</button>
-        </div>
+    <!-- Registration Form -->
+    <div id="register">
+        <h2>Register</h2>
+        <input type="text" id="register-username" placeholder="Enter Username">
+        <input type="password" id="register-password" placeholder="Enter Password">
+        <button id="submit-register">Register</button>
+        <p>Already have an account? <button id="login-btn">Login</button></p>
     </div>
+
+    <!-- Login Form -->
+    <div id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Enter Username">
+        <input type="password" id="login-password" placeholder="Enter Password">
+        <button id="submit-login">Login</button>
+        <p>Don't have an account? <button id="register-btn">Register</button></p>
+    </div>
+
+    <!-- Video Section -->
+    <div id="video-container" style="display: none;">
+        <iframe id="promo-video" 
+            src="https://player.cloudinary.com/embed/?public_id=3628049277-preview_h5kro8&cloud_name=dgrwpafhr&profile=cld-default&autoplay=true&muted=true&loop=true"
+            width="100%" height="400px" frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- Fare Calculator & Booking -->
+    <div id="fare-calculator" style="display: none;">
+        <h2>Matatu Fare Calculator</h2>
+        <label for="pickup">Pickup Location:</label>
+        <select id="pickup">
+            <option value="Embakasi">Embakasi</option>
+            <option value="CBD">CBD</option>
+            <option value="Kikuyu">Kikuyu</option>
+            <option value="Westlands">Westlands</option>
+            <option value="Thika">Thika</option>
+            <option value="Ruiru">Ruiru</option>
+            <option value="Ngong">Ngong</option>
+        </select>
+
+        <label for="destination">Destination:</label>
+        <select id="destination">
+            <option value="Kikuyu">Kikuyu</option>
+            <option value="Westlands">Westlands</option>
+            <option value="CBD">CBD</option>
+            <option value="Thika">Thika</option>
+            <option value="Ruiru">Ruiru</option>
+            <option value="Ngong">Ngong</option>
+        </select>
+
+        <label for="passengers">Number of Passengers:</label>
+        <input type="number" id="passengers" min="1" value="1">
+
+        <button id="calculate-fare">Calculate Fare</button>
+        <p id="total-fare"></p>
+
+        <button id="book-now">Book Now</button>
+    </div>
+
+    <!-- Confirmation Message -->
+    <div id="confirmation-message" style="display: none;"></div>
 
     <script src="script.js"></script>
 </body>

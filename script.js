@@ -1,59 +1,91 @@
-// Show registration form
-function showRegister() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registerForm").style.display = "block";
-}
+document.addEventListener("DOMContentLoaded", function () {
+    const loginContainer = document.getElementById("login-container");
+    const registerContainer = document.getElementById("register");
+    const fareCalculator = document.getElementById("fare-calculator");
+    const confirmationMessage = document.getElementById("confirmation-message");
+    const videoContainer = document.getElementById("video-container");
+    const videoElement = document.getElementById("promo-video");
 
-// Show login form
-function showLogin() {
-    document.getElementById("registerForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-}
+    const users = {}; // Object to store registered users
 
-// Register new user (stored in localStorage)
-function register() {
-    let username = document.getElementById("registerUsername").value;
-    let password = document.getElementById("registerPassword").value;
+    document.getElementById("register-btn").addEventListener("click", function () {
+        registerContainer.style.display = "block";
+        loginContainer.style.display = "none";
+    });
 
-    if (!username || !password) {
-        alert("Please fill in all fields.");
-        return;
-    }
+    document.getElementById("login-btn").addEventListener("click", function () {
+        loginContainer.style.display = "block";
+        registerContainer.style.display = "none";
+    });
 
-    if (localStorage.getItem(username)) {
-        alert("User already exists!");
-        return;
-    }
+    document.getElementById("submit-register").addEventListener("click", function () {
+        const registerUsername = document.getElementById("register-username").value;
+        const registerPassword = document.getElementById("register-password").value;
 
-    localStorage.setItem(username, password);
-    alert("Registration successful! Please login.");
-    showLogin();
-}
+        if (registerUsername && registerPassword) {
+            if (users[registerUsername]) {
+                alert("Username already exists. Try logging in.");
+            } else {
+                users[registerUsername] = registerPassword;
+                alert("Registration successful! Please log in.");
+                registerContainer.style.display = "none";
+                loginContainer.style.display = "block";
+            }
+        } else {
+            alert("Please fill in all fields.");
+        }
+    });
 
-// Login user (checks localStorage)
-function login() {
-    let username = document.getElementById("loginUsername").value;
-    let password = document.getElementById("loginPassword").value;
+    document.getElementById("submit-login").addEventListener("click", function () {
+        const loginUsername = document.getElementById("login-username").value;
+        const loginPassword = document.getElementById("login-password").value;
 
-    if (localStorage.getItem(username) === password) {
-        alert("Login successful!");
-        document.getElementById("loginForm").style.display = "none";
-        document.getElementById("fareCalculator").style.display = "block";
-    } else {
-        alert("Invalid username or password.");
-    }
-}
+        if (users[loginUsername] && users[loginUsername] === loginPassword) {
+            alert("Login successful!");
+            loginContainer.style.display = "none";
+            fareCalculator.style.display = "block";
+            videoContainer.style.display = "block";
+            videoElement.play();
+        } else {
+            alert("Invalid username or password. Please try again.");
+        }
+    });
 
-// Fare Calculation
-function calculateFare() {
-    let distance = document.getElementById("distance").value;
-    let rate = document.getElementById("rate").value;
-    let total = distance * rate;
-    document.getElementById("totalFare").textContent = total;
-}
+    const routePrices = {
+        "Embakasi-Kikuyu": 190,
+        "Embakasi-Westlands": 150,
+        "CBD-Kikuyu": 100,
+        "CBD-Westlands": 80,
+        "Thika-Ruiru": 120,
+        "Thika-Nairobi": 200,
+        "Kikuyu-Ngong": 180,
+        "Westlands-Ruiru": 140
+    };
 
-// Logout
-function logout() {
-    document.getElementById("fareCalculator").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-}
+    document.getElementById("calculate-fare").addEventListener("click", function () {
+        const pickup = document.getElementById("pickup").value;
+        const destination = document.getElementById("destination").value;
+        const passengers = parseInt(document.getElementById("passengers").value, 10);
+        const routeKey = `${pickup}-${destination}`;
+
+        if (routePrices[routeKey]) {
+            const totalFare = routePrices[routeKey] * passengers;
+            document.getElementById("total-fare").innerText = `Total Fare: KES ${totalFare}`;
+        } else {
+            document.getElementById("total-fare").innerText = "Invalid route selected";
+        }
+    });
+
+    document.getElementById("book-now").addEventListener("click", function () {
+        confirmationMessage.style.display = "block";
+        confirmationMessage.innerHTML = `
+            <p>Your booking has been confirmed! Thank you for choosing our service.</p>
+            <p>To complete your payment, send KES <strong id="pay-amount"></strong> to <strong>M-Pesa: 0745694981</strong></p>
+        `;
+        const totalFareText = document.getElementById("total-fare").innerText;
+        const fareMatch = totalFareText.match(/\d+/);
+        if (fareMatch) {
+            document.getElementById("pay-amount").innerText = fareMatch[0];
+        }
+    });
+});
