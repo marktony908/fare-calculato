@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const videoContainer = document.getElementById("video-container");
     const videoElement = document.getElementById("promo-video");
 
-    const users = {}; // Object to store registered users
+    // Load users from localStorage
+    let users = JSON.parse(localStorage.getItem("users")) || {};
 
     document.getElementById("register-btn").addEventListener("click", function () {
         registerContainer.style.display = "block";
@@ -19,14 +20,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("submit-register").addEventListener("click", function () {
-        const registerUsername = document.getElementById("register-username").value;
-        const registerPassword = document.getElementById("register-password").value;
+        const registerUsername = document.getElementById("register-username").value.trim();
+        const registerPassword = document.getElementById("register-password").value.trim();
 
         if (registerUsername && registerPassword) {
             if (users[registerUsername]) {
                 alert("Username already exists. Try logging in.");
             } else {
                 users[registerUsername] = registerPassword;
+                localStorage.setItem("users", JSON.stringify(users));
                 alert("Registration successful! Please log in.");
                 registerContainer.style.display = "none";
                 loginContainer.style.display = "block";
@@ -37,15 +39,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("submit-login").addEventListener("click", function () {
-        const loginUsername = document.getElementById("login-username").value;
-        const loginPassword = document.getElementById("login-password").value;
+        const loginUsername = document.getElementById("login-username").value.trim();
+        const loginPassword = document.getElementById("login-password").value.trim();
 
         if (users[loginUsername] && users[loginUsername] === loginPassword) {
             alert("Login successful!");
             loginContainer.style.display = "none";
             fareCalculator.style.display = "block";
             videoContainer.style.display = "block";
-            videoElement.play();
+            videoElement.src += "&autoplay=true"; // Play video after login
         } else {
             alert("Invalid username or password. Please try again.");
         }
@@ -57,10 +59,16 @@ document.addEventListener("DOMContentLoaded", function () {
         "CBD-Kikuyu": 100,
         "CBD-Westlands": 80,
         "Thika-Ruiru": 120,
-        "Thika-Nairobi": 200,
+        "Thika-CBD": 200,
         "Kikuyu-Ngong": 180,
         "Westlands-Ruiru": 140
     };
+
+    // Add reverse routes
+    Object.keys(routePrices).forEach(route => {
+        const [from, to] = route.split("-");
+        routePrices[`${to}-${from}`] = routePrices[route];
+    });
 
     document.getElementById("calculate-fare").addEventListener("click", function () {
         const pickup = document.getElementById("pickup").value;
